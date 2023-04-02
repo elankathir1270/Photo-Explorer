@@ -19,7 +19,7 @@ const PhotosExplorer = () => {
       const ImageURLs = d?.results.map((item) => {
         return item.urls.small;
       });
-
+//image urls being updated in state
       setPhotoDetails(ImageURLs);
     });
   };
