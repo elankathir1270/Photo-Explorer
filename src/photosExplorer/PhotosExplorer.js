@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useRef, useState } from "react";
 import Searchbar from "../component/Searchbar";
 import { Photoapi } from "../services/Photoapi";
 import "./photosExplorer.css";
@@ -6,6 +6,21 @@ import Footer from "../footer/footer";
 
 const PhotosExplorer = () => {
   const [photoDetails, setPhotoDetails] = useState([]);
+  const [natureCardVisibility, setNatureCardVisibility] = useState();
+  const [animalCardVisibility, setAnimalCardVisibility] = useState();
+  const [flowersCardVisibility, setFlowersCardVisibility] = useState();
+  const [countriesCardVisibility, setCountriesCardVisibility] = useState();
+  const [vehicalCardVisibility, setVehicalCardVisibility] = useState();
+  const [worshipCardVisibility, setWorshipCardVisibility] = useState();
+  const [placeCardVisibility, setPlaceCardVisibility] = useState();
+  const natureCardRef = useRef(null);
+  const animalCardRef = useRef(null);
+  const flowersCardRef = useRef(null);
+  const countriesCardRef = useRef(null);
+  const vehicalCardRef = useRef(null);
+  const worshipCardRef = useRef(null);
+  const placeCardRef = useRef(null);
+  
 
   const ApiCall = (photoName) => {
     Photoapi.get("/search/photos", {
@@ -23,6 +38,48 @@ const PhotosExplorer = () => {
       setPhotoDetails(ImageURLs);
     });
   };
+
+  useEffect(() =>{
+    const natureCardObserver = new IntersectionObserver((entries) => {
+      const entry1 = entries[0]
+      setNatureCardVisibility(entry1.isIntersecting)
+    })
+    const animalsCardObserver = new IntersectionObserver((entries) => {
+      const entry2 = entries[0]
+      setAnimalCardVisibility(entry2.isIntersecting)
+    })
+    const flowersCardObserver = new IntersectionObserver((entries) => {
+      const entry3 = entries[0]
+      setFlowersCardVisibility(entry3.isIntersecting)
+    })
+    const countriesCardObserver = new IntersectionObserver((entries) => {
+      const entry4 = entries[0]
+      setCountriesCardVisibility(entry4.isIntersecting)
+    })
+    const vehicalCardObserver = new IntersectionObserver((entries) => {
+      const entry5 = entries[0]
+      setVehicalCardVisibility(entry5.isIntersecting)
+    })
+    const worshipCardObserver = new IntersectionObserver((entries) => {
+      const entry6 = entries[0]
+      setWorshipCardVisibility(entry6.isIntersecting)
+    })
+    const placeCardObserver = new IntersectionObserver((entries) => {
+      const entry7 = entries[0]
+      setPlaceCardVisibility(entry7.isIntersecting)
+    })
+
+    natureCardObserver.observe(natureCardRef.current)
+    animalsCardObserver.observe(animalCardRef.current)
+    flowersCardObserver.observe(flowersCardRef.current)
+    countriesCardObserver.observe(countriesCardRef.current)
+    vehicalCardObserver.observe(vehicalCardRef.current)
+    worshipCardObserver.observe(worshipCardRef.current)
+    placeCardObserver.observe(placeCardRef.current)
+
+  },[])
+   
+
 
   return (
     <div className="mainBody">
@@ -51,10 +108,11 @@ const PhotosExplorer = () => {
       </div>
 
       <div>
-        <div className="nature">
+        <div  className="nature">
           <h2 className="title">NATURE</h2>
-
-          <div className="cards-pallet">
+          
+          <div ref={natureCardRef} 
+        className={`cards-pallet ${natureCardVisibility && "scale-Up"}`}>
             <a href="#result">
               <div
                 className="card"
@@ -109,10 +167,11 @@ const PhotosExplorer = () => {
             
           </div>
         </div>
-        <div className="animals">
+        <div  className="animals">
           <h2 className="title">ANIMALS</h2>
 
-          <div className="cards-pallet">
+          <div ref={animalCardRef} 
+          className= {`cards-pallet ${animalCardVisibility && "scale-Up"}`}>
           <a href="#result">
           <div className="card"
              onClick={() => {
@@ -163,10 +222,11 @@ const PhotosExplorer = () => {
           
           </div>
         </div>
-        <div className="flowers">
+        <div  className="flowers">
           <h2 className="title">FLOWERS</h2>
 
-          <div className="cards-pallet">
+          <div ref={flowersCardRef} 
+          className= {`cards-pallet ${flowersCardVisibility && "scale-Up"}`}>
             <a href="#result">
             <div className="card"
               onClick={() => {
@@ -217,10 +277,11 @@ const PhotosExplorer = () => {
         
           </div>
         </div>
-        <div className="countries">
+        <div  className="countries">
           <h2 className="title">COUNTRIES</h2>
 
-          <div className="cards-pallet">
+          <div ref={countriesCardRef} 
+          className= {`cards-pallet ${countriesCardVisibility && "scale-Up"}`}>
 
           <a href="#result">
           <div className="card"
@@ -274,7 +335,8 @@ const PhotosExplorer = () => {
         <div className="vehicle">
           <h2 className="title">VEHICLE</h2>
 
-          <div className="cards-pallet">
+          <div ref={vehicalCardRef}  
+          className= {`cards-pallet ${vehicalCardVisibility && "scale-Up"}`}>
             <a href="#result">
               <div className="card"
                  onClick={() => {
@@ -326,10 +388,11 @@ const PhotosExplorer = () => {
            
           </div>
         </div>
-        <div className="worship_place">
+        <div  className="worship_place">
           <h2 className="title">WORSHIP PLACE</h2>
 
-          <div className="cards-pallet">
+          <div ref={worshipCardRef} 
+          className={`cards-pallet ${ worshipCardVisibility && "scale-Up"}`}>
             <a href="#result">
               <div className="card"
                   onClick={() => {
@@ -380,10 +443,11 @@ const PhotosExplorer = () => {
            
           </div>
         </div>
-        <div className="places">
+        <div  className="places">
           <h2 className="title">PLACES</h2>
 
-          <div className="cards-pallet">
+          <div ref={placeCardRef} 
+          className={`cards-pallet ${ placeCardVisibility && "scale-Up"}`}>
             <a href="#result">
               <div className="card"
                    onClick={() => {
@@ -434,6 +498,7 @@ const PhotosExplorer = () => {
            
           </div>
         </div>
+        
       </div>
       <div className="footer-container">
       <Footer />
